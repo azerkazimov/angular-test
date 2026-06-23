@@ -25,20 +25,20 @@ export class Movies {
     }
 
     this.movieService.searchMovies(this.searchTitle).subscribe({
-      next: (response)=>{
-        if (response.Search) {
+      next: (response) => {
+        if (response.Response === 'True' && response.Search?.length) {
           this.movies.set(response.Search);
           this.errorMessage.set('');
         } else {
-          this.errorMessage.set('No movies found.');
+          this.errorMessage.set(response.Error ?? 'No movies found.');
           this.movies.set([]);
         }
       },
-      error: (error) => {
+      error: () => {
         this.errorMessage.set('An error occurred while fetching movies.');
-        this.movies.set([]) ;
-      }
-    })
+        this.movies.set([]);
+      },
+    });
   }
 
 }
