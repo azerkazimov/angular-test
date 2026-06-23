@@ -1,0 +1,55 @@
+<div class="min-h-screen bg-neutral-950 text-white p-6 md:p-12 font-sans">
+  <div class="max-w-4xl mx-auto">
+    
+    <a routerLink="/movies" class="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition mb-8 group text-sm font-medium no-underline">
+      <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Back to Movies
+    </a>
+
+    <div *ngIf="movie()" class="flex flex-col md:flex-row gap-8 bg-neutral-900 p-6 md:p-8 rounded-xl border border-neutral-800 shadow-2xl">
+      
+      <div class="w-full md:w-1/3 aspect-2/3 rounded-lg overflow-hidden bg-neutral-800 shadow-lg border border-neutral-700">
+        <img 
+          *ngIf="movie().Poster !== 'N/A'; else noPoster" 
+          [src]="movie().Poster" 
+          [alt]="movie().Title" 
+          class="w-full h-full object-cover"
+        />
+        <ng-template #noPoster>
+          <div class="w-full h-full flex items-center justify-center bg-neutral-950 text-neutral-600">🎬 No Poster</div>
+        </ng-template>
+      </div>
+
+      <div class="grow space-y-4">
+        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+          <h1 class="text-3xl font-extrabold tracking-tight text-white md:text-4xl">{{ movie().Title }}</h1>
+          <span class="text-red-500 font-semibold text-lg">{{ movie().Year }}</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-xs font-semibold text-neutral-400">
+          <span class="px-2 py-1 bg-neutral-800 rounded border border-neutral-700">{{ movie().Rated }}</span>
+          <span class="px-2 py-1 bg-neutral-800 rounded border border-neutral-700">{{ movie().Runtime }}</span>
+          <span class="px-2 py-1 bg-neutral-800 rounded border border-neutral-700">{{ movie().Genre }}</span>
+        </div>
+
+        <p class="text-neutral-300 leading-relaxed text-sm md:text-base bg-neutral-950/50 p-4 rounded-lg border border-neutral-950">
+          {{ movie().Plot }}
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm border-t border-neutral-800 pt-4 text-neutral-400">
+          <div><strong class="text-neutral-200">Director:</strong> {{ movie().Director }}</div>
+          <div><strong class="text-neutral-200">Actors:</strong> {{ movie().Actors }}</div>
+          <div>
+            <strong class="text-neutral-200">IMDb Rating:</strong> 
+            <span class="text-yellow-500 font-bold ml-1">⭐ {{ movie().imdbRating }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="!movie()" class="text-center py-20 text-neutral-500 animate-pulse">
+      Loading movie details...
+    </div>
+
+  </div>
+</div>

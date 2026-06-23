@@ -1,0 +1,70 @@
+<div class="max-w-2xl mx-auto p-6 bg-slate-50 min-h-screen">
+    <h1 (click)="showAlert()"
+        class="text-3xl font-extrabold text-slate-800 tracking-tight cursor-pointer hover:text-indigo-600 transition duration-200 mb-8 text-center">
+        Notes App 📝
+    </h1>
+
+    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 mb-8">
+        <h2 class="text-xl font-bold text-slate-700 mb-4">Add New Note</h2>
+
+        <form #noteForm="ngForm" (ngSubmit)="addNote(noteForm)" class="space-y-4">
+            <div>
+                <div class="flex flex-col">
+                    <label for="noteTitle" class="block text-sm font-medium text-slate-700 mb-1">Title</label>
+                    <input [(ngModel)]="noteTitle" name="noteTitle" #titleRef="ngModel" required minlength="3"
+                        maxlength="50" placeholder="Enter title"
+                        class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 text-sm" />
+                    <div *ngIf="submitted && titleRef.invalid" class="text-red-500 text-sm mt-1">
+                        <span *ngIf="titleRef.errors?.['required']">Title is required.</span>
+                        <span *ngIf="titleRef.errors?.['minlength']">Title must be at least 3 characters.</span>
+                        <span *ngIf="titleRef.errors?.['maxlength']">Title cannot exceed 50 characters.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="noteContent" class="block text-sm font-medium text-slate-700 mb-1">Content</label>
+                <textarea [(ngModel)]="noteContent" #contentRef="ngModel" required minlength="5" name="noteContent"
+                    placeholder="Enter content" rows="4"
+                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 text-sm resize-none"></textarea>
+                <div *ngIf="submitted && contentRef.invalid" class="text-red-500 text-sm mt-1">
+                    <span *ngIf="contentRef.errors?.['required']">Content is required.</span>
+                    <span *ngIf="contentRef.errors?.['minlength']">Content must be at least 5 characters.</span>
+                </div>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-sm hover:shadow transition duration-200 text-sm">
+                Add Note
+            </button>
+        </form>
+    </div>
+
+    <hr class="border-slate-200 my-6" />
+
+    <div class="space-y-4">
+        <h3 class="text-lg font-semibold text-slate-600 mb-2">Your Notes</h3>
+
+        @if (notes().length === 0) {
+        <p class="text-slate-400 text-sm italic text-center py-4">No notes yet. Add one above!</p>
+        }
+
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
+            <li *ngFor="let note of notes()"
+                class="bg-white p-5 rounded-xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition duration-200">
+                <a routerLink="/note/{{ note.id }}" class="no-underline text-inherit">
+                    <strong class="block text-base font-bold text-slate-800 mb-2">
+                        {{ note.title || 'Untitled Note' }}
+                    </strong>
+                    <p class="text-slate-600 text-sm leading-relaxed whitespace-pre-line">
+                        {{ note.content }}
+                    </p>
+                </a>
+
+                <span class="block text-[11px] text-slate-400 mt-4 text-right">
+                    {{ note.createdAt | date:'shortTime' }}
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>

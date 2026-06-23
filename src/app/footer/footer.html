@@ -1,0 +1,32 @@
+<footer class="w-full bg-white border-t border-slate-200 py-6 px-4 mt-auto">
+  <div class="max-w-2xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    
+    <div class="text-sm text-slate-500 space-y-1">
+      <p class="font-medium">Copyright © 2026.</p>
+      @if (username) {
+        <p class="text-indigo-600 font-semibold animate-fade-in">
+          Hello, <span class="underline decoration-indigo-300">{{ username }}</span>! 👋
+        </p>
+      } @else {
+        <p class="text-slate-400 italic">Hello, stranger</p>
+      }
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+      <input 
+        [(ngModel)]="username" 
+        name="username" 
+        placeholder="Enter your name"
+        class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+      />
+      
+      <button 
+        (click)="emitClick()"
+        class="bg-slate-800 hover:bg-slate-900 text-white font-medium text-sm py-1.5 px-4 rounded-lg shadow-sm hover:shadow transition duration-200 whitespace-nowrap"
+      >
+        Click me
+      </button>
+    </div>
+
+  </div>
+</footer>
